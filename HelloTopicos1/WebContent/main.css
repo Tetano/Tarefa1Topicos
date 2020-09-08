@@ -1,0 +1,52 @@
+.container {
+	width: 100vw;
+	height: 100vh;
+	background-image: linear-gradient(to right, rgba(195, 20, 50, 1),
+		rgba(36, 11, 54, 1));
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.box {
+	border: 5px solid black;
+	width: 500px;
+	height: 400px;
+	background-image: linear-gradient(to right, rgba(36, 11, 54, 1),
+		rgba(195, 20, 50, 1));
+}
+
+body {
+	margin: 0px;
+}
+
+.inputkind1 {
+	margin-left: 20%;
+	margin-top: 10%;
+	width: 300px;
+}
+
+.inputkind2 {
+	margin-left: 20%;
+	margin-top: 3px;
+	width: 300px;
+}
+
+.inputTextArea {
+	width: 305px;
+	height: 200px;
+	margin-left: 20%;
+	margin-top: 3px;
+}
+
+.btnkindLogin1 {
+	display: flex;
+	color: white;
+	background: #000C40;
+	margin-left: 20%;
+	margin-top: 3px;
+	width: 310px;
+	text-align: center;
+	line-height: 65px;
+}
