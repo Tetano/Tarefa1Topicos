@@ -10,6 +10,15 @@ public class HelloController {
 	String email;
 	String mensagem;
 	
+	
+	public String apresentar() {
+		System.out.println(nome);
+		System.out.println(email);
+		System.out.println(mensagem);
+		return email+nome+mensagem;
+	}
+	
+	
 	public String getNome() {
 		return nome;
 	}
@@ -29,10 +38,5 @@ public class HelloController {
 		this.mensagem = mensagem;
 	}
 	
-	void apresentar() {
-		System.out.println(nome);
-		System.out.println(email);
-		System.out.println(mensagem);
-	}
-	
+
 }
