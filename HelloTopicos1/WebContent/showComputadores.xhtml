@@ -2,7 +2,8 @@
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:h="http://xmlns.jcp.org/jsf/html">
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
 <h:head>
 	<title>Hello, World!</title>
@@ -16,17 +17,27 @@
 				<div class="divtop">
 					<h:inputText value="#{computadorController.computador.placaMae}"
 						styleClass="inputkind2">
+						<f:passThroughAttribute name="type" value="text" />
 						<f:passThroughAttribute name="placeholder" value="Placa mãe" />
-					</h:inputText>
-
-					<h:inputText value="#{computadorController.computador.id}"
-						styleClass="inputkind2">
-						<f:passThroughAttribute name="placeholder" value="Id" />
 					</h:inputText>
 
 					<h:inputText value="#{computadorController.computador.processador}"
 						styleClass="inputkind2">
 						<f:passThroughAttribute name="placeholder" value="Processador" />
+					</h:inputText>
+
+					<h:inputText value="#{computadorController.computador.cpf}"
+						styleClass="inputkind2">
+						<f:passThroughAttribute name="placeholder"
+							value="CPF: 000.000.000-00" />
+						<f:validateLength maximum="11" minimum="11"></f:validateLength>
+						<f:validateRegex pattern="[0-9]{11}+"></f:validateRegex>
+					</h:inputText>
+
+					<h:inputText value="#{computadorController.computador.dataCompra}"
+						styleClass="inputkind2">
+						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+						<f:passThroughAttribute name="placeholder" value="00/00/0000" />
 					</h:inputText>
 
 					<h:inputText value="#{computadorController.computador.memoria}"
@@ -42,6 +53,7 @@
 
 					<h:inputText value="#{computadorController.computador.fonte}"
 						styleClass="inputkind2">
+						<f:passThroughAttribute name="type" value="number" />
 						<f:passThroughAttribute name="placeholder" value="Fonte" />
 					</h:inputText>
 				</div>
@@ -52,26 +64,32 @@
 						value="#{computadorController.listaComputador}" var="objeto">
 
 						<h:column>
-								<f:facet name="header">
+							<f:facet name="header">
 								<h3 style="color: white">Editor</h3>
 							</f:facet>
-							<h:commandLink styleClass="comandLink" value="Editar"
+							<h:commandLink styleClass="comandLink" value="Selecionar"
 								actionListener="#{computadorController.editar(objeto)}"></h:commandLink>
 						</h:column>
 
 						<h:column>
-						
 							<f:facet name="header">
 								<h3 style="color: white">ID</h3>
 							</f:facet>
-							<h:outputText styleClass="corBranca" value="#{objeto.id}"/>
+							<h:outputText styleClass="corBranca" value="#{objeto.id}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h3 style="color: white">CPF</h3>
+							</f:facet>
+							<h:outputText styleClass="corBranca" value="#{objeto.cpf}" />
 						</h:column>
 
 						<h:column>
 							<f:facet name="header">
 								<h3 style="color: white">Placa Mãe</h3>
 							</f:facet>
-							<h:outputText styleClass="corBranca" value="#{objeto.placaMae}"/>
+							<h:outputText styleClass="corBranca" value="#{objeto.placaMae}" />
 						</h:column>
 
 						<h:column>
@@ -97,14 +115,21 @@
 							<h:outputText styleClass="corBranca" value="#{objeto.memoria}" />
 						</h:column>
 
+						<h:column>
+							<f:facet name="header">
+								<h3 style="color: white">DataCompra</h3>
+							</f:facet>
+							<h:outputText styleClass="corBranca" value="#{objeto.dataCompra}">
+								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+							</h:outputText>
 
+						</h:column>
 						<h:column>
 							<f:facet name="header">
 								<h3 style="color: white">Fonte</h3>
 							</f:facet>
-							<h:outputText styleClass="corBranca" value="#{objeto.fonte}" />
+							<h:outputText styleClass="corBranca" value="#{objeto.fonte} Wats" />
 						</h:column>
-
 
 					</h:dataTable>
 				</div>
@@ -115,13 +140,19 @@
 					<section class="container3 row">
 						<h:commandButton style="background:#FFF" styleClass="item"
 							value="Inserir"
-							actionListener="#{computadorController.inserir()}"></h:commandButton>
+							actionListener="#{computadorController.inserir()}"
+							disabled="#{computadorController.computador.id != null}"></h:commandButton>
 						<h:commandButton style="background:#FFF" styleClass="item"
-							value="Alterar" actionListener="#{computadorController.alterar()}"></h:commandButton>
+							value="Alterar"
+							actionListener="#{computadorController.alterar()}"
+							disabled="#{computadorController.computador.id == null}"></h:commandButton>
 						<h:commandButton style="background:#FFF" styleClass="item"
-							value="Excluir" actionListener="#{computadorController.excluir()}"></h:commandButton>
+							value="Excluir"
+							actionListener="#{computadorController.excluir()}"
+							disabled="#{computadorController.computador.id == null}"></h:commandButton>
 						<h:commandButton style="background:#FFF" styleClass="item"
-							value="Limpar" actionListener="#{computadorController.limpar()}"></h:commandButton>
+							value="Limpar" actionListener="#{computadorController.limpar()}"
+							disabled="#{computadorController.computador.id == null}"></h:commandButton>
 					</section>
 				</div>
 			</h:form>

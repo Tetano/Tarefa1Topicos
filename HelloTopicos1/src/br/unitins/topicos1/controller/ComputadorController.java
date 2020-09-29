@@ -22,9 +22,10 @@ public class ComputadorController implements Serializable {
 	private static final long serialVersionUID = -7748328763730744281L;
 	private Computador computador;
 	List<Computador> listaComputador;
-
+	int id = 0;
 
 	public void inserir() {
+	
 		if (computador.getPlacaMae().isEmpty() || computador.getProcessador().isEmpty()
 				|| computador.getMemoria().isEmpty() || computador.getPlacaDeVideo().isEmpty()
 				|| computador.getFonte().isEmpty()) {
@@ -33,16 +34,22 @@ public class ComputadorController implements Serializable {
 			Util.addMessage("Não pode inserir valores nulos");
 			return;
 		}
+		getComputador().setId(++id);
+		if(getComputador().getId() < 0) {
+			return;
+		}
 		System.out.println(computador.getPlacaMae().toString());
 		System.out.println(computador.getProcessador().toString());
 		System.out.println(computador.getMemoria().toString());
 		System.out.println(computador.getPlacaDeVideo().toString());
 		System.out.println(computador.getFonte().toString());
 		System.out.println(computador.getId());
+	
 
 		getListaComputador().add(computador);
 		limpar();
 	}
+
 
 	public void alterar() {
 		int index = getListaComputador().indexOf(getComputador());
@@ -57,9 +64,22 @@ public class ComputadorController implements Serializable {
 	public void excluir() {
 		int index = getListaComputador().indexOf(getComputador());
 		getListaComputador().remove(index);
+		limpar();
 		return;
 	}
-
+	
+	public void ValidarCpf() {
+		if(computador.getCpf().isBlank()||computador.getCpf().isEmpty()) {
+			return;
+		}
+		if(computador.getCpf().length()<11) {
+			Util.addMessage("Verifique se o CPF possui 11 digitos, digite sem . ou - apenas números");
+			return;
+		}
+		
+	}
+	
+	
 	public void limpar() {
 		computador = null;
 

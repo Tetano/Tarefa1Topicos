@@ -1,19 +1,31 @@
 package br.unitins.topicos1.model;
 
+import java.time.LocalDate;
+
 public class Computador {
-	private int id;
+	private Integer id;
+	private String cpf;
 	private String placaMae;
+	private LocalDate dataCompra;
 	private String placaDeVideo;
 	private String memoria;
 	private String processador;
 	private String fonte;
+	private String objetivo;
 	private boolean limpo;
 	
 	
-	public int getId() {
+	
+	public String getCpf() {
+		return cpf;
+	}
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getPlacaMae() {
@@ -52,7 +64,19 @@ public class Computador {
 	public void setLimpo(boolean limpo) {
 		this.limpo = limpo;
 	}
-	
+	public LocalDate getDataCompra() {
+		return dataCompra;
+	}
+	public void setDataCompra(LocalDate dataCompra) {
+		this.dataCompra = dataCompra;
+	}
+	public String getObjetivo() {
+		return objetivo;
+	}
+	public void setObjetivo(String objetivo) {
+		this.objetivo = objetivo;
+	}
+
 	
 
 
