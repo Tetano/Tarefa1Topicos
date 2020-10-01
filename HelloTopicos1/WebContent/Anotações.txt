@@ -1,0 +1,14 @@
+CommandButtons:
+	Action: Não recebe parametros mas pode retornar uma String e pode ser usado entre navegações.
+	
+Listener de evento:
+
+
+f:ajax: É a tag Ajax do JSF, pode ser usado da seguinte forma:
+				<f:ajax render="label" execute="input" event="click" listener="#{testeAjax.imprimir}"></f:ajax>
+	-> Faz com que qualquer elemento seja "clickavel" contenha um evento e um método.
+	-> Listener é semelhante ao action e actionListener (aceita com e sem parâmetros).
+	-> Evente aceita tipos como: click, bluer etc.
+	
+	
+	-> Coisas bugadas do ajax, aparentemente o método é bugado e o html também é
