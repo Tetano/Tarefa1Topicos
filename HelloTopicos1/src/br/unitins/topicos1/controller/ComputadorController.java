@@ -59,6 +59,7 @@ public class ComputadorController implements Serializable {
 	
 	public void editar(Computador pc) {
 		setComputador(pc);
+		Util.addMessage("Item "+pc.getId().toString() + "Selecionado");
 	}
 
 	public void excluir() {

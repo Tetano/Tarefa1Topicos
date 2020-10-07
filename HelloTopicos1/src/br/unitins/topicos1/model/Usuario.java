@@ -1,14 +1,26 @@
 package br.unitins.topicos1.model;
 
-import java.time.LocalDate;
-
 public class Usuario {
-		public int id;
-		private String nome;
-		private String emai;
-		private LocalDate dataNascimento;
-		private String senha;
-		private String sexo;
-		private String cidade;
-		private String perfil;
+	private String login;
+	private String senha;
+	private String confirmarSenha;
+	public String getLogin() {
+		return login;
+	}
+	public void setLogin(String login) {
+		this.login = login;
+	}
+	public String getSenha() {
+		return senha;
+	}
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	public String getConfirmarSenha() {
+		return confirmarSenha;
+	}
+	public void setConfirmarSenha(String confirmarSenha) {
+		this.confirmarSenha = confirmarSenha;
+	}
+	
 }

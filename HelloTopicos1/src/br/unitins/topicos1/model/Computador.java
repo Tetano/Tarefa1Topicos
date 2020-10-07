@@ -3,6 +3,12 @@ package br.unitins.topicos1.model;
 import java.time.LocalDate;
 
 public class Computador {
+	public LocalDate getDataCompra() {
+		return dataCompra;
+	}
+	public void setDataCompra(LocalDate dataCompra) {
+		this.dataCompra = dataCompra;
+	}
 	private Integer id;
 	private String cpf;
 	private String placaMae;
@@ -11,11 +17,18 @@ public class Computador {
 	private String memoria;
 	private String processador;
 	private String fonte;
-	private String objetivo;
-	private boolean limpo;
+	private boolean selecionado = false;
+//	private String objetivo;
+//	private boolean limpo;
 	
 	
 	
+	public boolean isSelecionado() {
+		return selecionado;
+	}
+	public void setSelecionado(boolean selecionado) {
+		this.selecionado = selecionado;
+	}
 	public String getCpf() {
 		return cpf;
 	}
@@ -58,26 +71,7 @@ public class Computador {
 	public void setFonte(String fonte) {
 		this.fonte = fonte;
 	}
-	public boolean isLimpo() {
-		return limpo;
-	}
-	public void setLimpo(boolean limpo) {
-		this.limpo = limpo;
-	}
-	public LocalDate getDataCompra() {
-		return dataCompra;
-	}
-	public void setDataCompra(LocalDate dataCompra) {
-		this.dataCompra = dataCompra;
-	}
-	public String getObjetivo() {
-		return objetivo;
-	}
-	public void setObjetivo(String objetivo) {
-		this.objetivo = objetivo;
-	}
 
-	
 
 
 

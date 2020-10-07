@@ -30,9 +30,9 @@ public class TesteAjax implements Serializable {
 	public String getSayWelcome(){
 	   //check if null?
 	   if("".equals(name) || name ==null){
-		return "";
+		return "Campo Nullo";
 	   }else{
-		return "Ajax message : Welcome " + name;
+		return "Ajax message : Nome é " + name;
 	   }
 	}
 }
