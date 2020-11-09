@@ -53,7 +53,6 @@
 
 					<h:inputText value="#{computadorController.computador.fonte}"
 						styleClass="inputkind2">
-						<f:passThroughAttribute name="type" value="number" />
 						<f:passThroughAttribute name="placeholder" value="Fonte" />
 					</h:inputText>
 				</div>
@@ -140,7 +139,7 @@
 					<section class="container3 row">
 						<h:commandButton style="background:#FFF" styleClass="item"
 							value="Inserir"
-							actionListener="#{computadorController.inserir()}"
+							actionListener="#{computadorController.incluir()}"
 							disabled="#{computadorController.computador.id != null}"></h:commandButton>
 						<h:commandButton style="background:#FFF" styleClass="item"
 							value="Alterar"

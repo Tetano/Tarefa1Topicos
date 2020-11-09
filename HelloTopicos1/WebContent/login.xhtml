@@ -13,40 +13,48 @@
 	<div class="container">
 		<div class="box">
 			<h:form>
-				<h:inputText id="inputlogin"
-					value="#{usuarioController.usuario.login}">
+				<h:messages styleClass="messages" style="font-size: large" />
+				<h:inputText value="#{usuarioController.usuario.nome}">
+					<f:passThroughAttribute name="type" value="text" />
+					<f:passThroughAttribute name="placeholder" value="Nome" />
+				</h:inputText>
+
+				<h:inputText value="#{usuarioController.usuario.cpf}">
 					<f:passThroughAttribute name="type" value="text" />
 					<f:passThroughAttribute name="placeholder" value="Digite Seu CPF" />
 				</h:inputText>
 
-				<h:inputText id="inputsenha"
-					value="#{usuarioController.usuario.senha}">
+				<h:inputText value="#{usuarioController.usuario.email}">
 					<f:passThroughAttribute name="type" value="text" />
-					<f:passThroughAttribute name="placeholder" value="Digite Seu CPF" />
+					<f:passThroughAttribute name="placeholder" value="Email" />
 				</h:inputText>
 
-				<h:inputText id="inputconfirmaSenha"
-					value="#{usuarioController.usuario.confirmarSenha}">
+				<h:inputText value="#{usuarioController.usuario.senha}">
 					<f:passThroughAttribute name="type" value="text" />
-					<f:passThroughAttribute name="placeholder" value="Digite Seu CPF" />
+					<f:passThroughAttribute name="placeholder" value="Senha" />
 				</h:inputText>
 
-				<h:commandButton value="Inserir Dados">
-					<f:ajax render="text1" execute="inputlogin"></f:ajax>
-					<f:ajax render="text2" execute="inputsenha"></f:ajax>
-					<f:ajax render="text3" execute="inputconfirmaSenha"></f:ajax>
+				<h:commandButton value="Inserir Dados"
+					actionListener="#{usuarioController.incluir}">
+
 				</h:commandButton>
 
-				<h:outputText id="text1" value="#{usuarioController.usuario.login}">
-				</h:outputText>
-				<br />
-				<h:outputText id="text2" value="#{usuarioController.usuario.senha}">
-				</h:outputText>
-				<br />
-				<h:outputText id="text3"
-					value="#{usuarioController.usuario.confirmarSenha}">
-				</h:outputText>
+				<h:dataTable var="obj" value="#{usuarioController.listausuario}">
 				
+					<p:column headerText="Teste">
+						<h:outputText value="#{obj.nome}"></h:outputText>
+					</p:column>
+					<p:column headerText="Teste">
+						<h:outputText value="#{obj.cpf}"></h:outputText>
+					</p:column>
+					<p:column headerText="Teste">
+						<h:outputText value="#{obj.email}"></h:outputText>
+					</p:column>
+					<p:column headerText="Teste">
+						<h:outputText value="#{obj.senha}"></h:outputText>
+					</p:column>
+				</h:dataTable>
+
 			</h:form>
 
 		</div>

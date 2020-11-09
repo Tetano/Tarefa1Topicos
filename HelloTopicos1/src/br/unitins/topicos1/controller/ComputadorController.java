@@ -1,6 +1,11 @@
 package br.unitins.topicos1.controller;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +15,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import br.unitins.topicos1.application.Util;
-import br.unitins.topicos1.model.Computador;
+import br.unitins.topicos1.model.*;
+import test.Util;
+import br.unitins.topicos1.application.*;
 
 @Named
 @ViewScoped
@@ -24,32 +30,89 @@ public class ComputadorController implements Serializable {
 	List<Computador> listaComputador;
 	int id = 0;
 
-	public void inserir() {
-	
-		if (computador.getPlacaMae().isEmpty() || computador.getProcessador().isEmpty()
-				|| computador.getMemoria().isEmpty() || computador.getPlacaDeVideo().isEmpty()
-				|| computador.getFonte().isEmpty()) {
-			System.out.println("Não pode inserir valores nulos");
-
-			Util.addMessage("Não pode inserir valores nulos");
-			return;
-		}
-		getComputador().setId(++id);
-		if(getComputador().getId() < 0) {
-			return;
-		}
-		System.out.println(computador.getPlacaMae().toString());
-		System.out.println(computador.getProcessador().toString());
-		System.out.println(computador.getMemoria().toString());
-		System.out.println(computador.getPlacaDeVideo().toString());
-		System.out.println(computador.getFonte().toString());
-		System.out.println(computador.getId());
-	
-
-		getListaComputador().add(computador);
-		limpar();
+private static Connection getConnection() {
+		
+		// Abre a conexão
+		Connection conn = null;
+		//Tentativa com try p/ executar código
+			
+			try {
+				// 1- Registrar Driver Do PostGre	
+				Class.forName("org.postgresql.Driver");
+				
+				// estabelecendo a conexão com banco de dados/ endereço/nome/senha				
+				conn = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/lojacomputador", "topicos1", "123456");
+				
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		return conn;
+		
 	}
 
+	public void incluir() {
+		Connection conn = getConnection();
+
+		StringBuffer sql = new StringBuffer();
+		sql.append("INSERT INTO ");
+		sql.append("computador ");
+		sql.append("  (cpf, placa_mae, processador, placa_video, memoria, fonte) ");
+		sql.append("VALUES ");
+		sql.append("  ( ?, ?, ?, ?, ?, ?) ");
+		PreparedStatement stat = null;
+		try {
+			Computador computador = getComputador();
+			stat = conn.prepareStatement(sql.toString());
+			stat.setString(1, computador.getCpf()); // Usa o get para definir o nome
+			//stat.setObject(2, computador.getDataCompra());
+			stat.setString(2, computador.getPlacaMae());
+			stat.setString(3, computador.getPlacaDeVideo());
+			stat.setString(4, computador.getProcessador()); // Usa o get para definir o nome
+			stat.setString(5, computador.getMemoria());
+			stat.setString(6, computador.getFonte());
+			//stat.setString(8, computador.getGabinete());
+			conn.setAutoCommit(false);
+			stat.execute();
+			// efetivando a transacao
+			conn.commit();
+			limpar();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// cancelando a transacao
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				System.out.println("Erro ao realizar o rollback.");
+				Util.addMessage("Erro ao realizar o rollback.");
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				if (!stat.isClosed())
+					stat.close();
+			} catch (SQLException e) {
+				System.out.println("Erro ao fechar o Statement");
+				Util.addMessage("Problema ao fechar conn");
+				e.printStackTrace();
+			}
+
+			try {
+				if (!conn.isClosed())
+					conn.close();
+			} catch (SQLException e) {
+				Util.addMessage("Problema ao fechar statement");
+				System.out.println("Erro a o fechar a conexao com o banco.");
+				e.printStackTrace();
+			}
+		}
+
+	}
 
 	public void alterar() {
 		int index = getListaComputador().indexOf(getComputador());
@@ -81,8 +144,10 @@ public class ComputadorController implements Serializable {
 	}
 	
 	
+	
 	public void limpar() {
 		computador = null;
+		listaComputador = null; // Para efetuar a nova conexão sem dar problema de não buscar o usuário
 
 	}
 
@@ -100,6 +165,64 @@ public class ComputadorController implements Serializable {
 	public List<Computador> getListaComputador() {
 		if (listaComputador == null) {
 			listaComputador = new ArrayList<Computador>();
+			Connection conn = getConnection();
+
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT ");
+			sql.append("  c.id, ");
+			sql.append(" c.cpf, ");
+			sql.append(" c.placa_mae, ");
+			sql.append(" c.processador, ");
+			sql.append(" c.placa_video, ");
+			sql.append(" c.memoria, ");
+			sql.append(" c.fonte ");
+			sql.append("FROM ");
+			sql.append("  computador c ");
+			sql.append("ORDER BY c.id ");
+			PreparedStatement stat = null;
+			try {
+				
+				stat = conn.prepareStatement(sql.toString());
+				
+				ResultSet rs = stat.executeQuery();
+				
+				while(rs.next()) {
+					Computador computador = new Computador();
+					computador.setId(rs.getInt("id"));
+					computador.setCpf(rs.getString("cpf"));
+					computador.setPlacaMae(rs.getString("placa_mae"));
+					computador.setProcessador(rs.getString("processador"));
+					computador.setPlacaDeVideo(rs.getString("placa_video"));
+					computador.setMemoria(rs.getString("memoria"));
+					computador.setFonte(rs.getString("fonte"));
+
+					listaComputador.add(computador);
+			
+				}
+				
+			} catch (SQLException e) {
+				Util.addMessage("Não foi possível buscar os dados");
+				e.printStackTrace();
+				// cancelando a transacao
+			} finally {
+				try {
+					if (!stat.isClosed())
+						stat.close();
+				} catch (SQLException e) {
+					System.out.println("Erro ao fechar o Statement");
+					Util.addMessage("Problema ao fechar conn");
+					e.printStackTrace();
+				}
+
+				try {
+					if (!conn.isClosed())
+						conn.close();
+				} catch (SQLException e) {
+					Util.addMessage("Problema ao fechar statement");
+					System.out.println("Erro a o fechar a conexao com o banco.");
+					e.printStackTrace();
+				}
+			}
 		}
 		return listaComputador;
 	}

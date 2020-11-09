@@ -11,24 +11,17 @@ public class Computador {
 	}
 	private Integer id;
 	private String cpf;
-	private String placaMae;
 	private LocalDate dataCompra;
+	private String placaMae;
 	private String placaDeVideo;
 	private String memoria;
 	private String processador;
 	private String fonte;
-	private boolean selecionado = false;
-//	private String objetivo;
-//	private boolean limpo;
+	private String gabinete;
+
 	
 	
-	
-	public boolean isSelecionado() {
-		return selecionado;
-	}
-	public void setSelecionado(boolean selecionado) {
-		this.selecionado = selecionado;
-	}
+
 	public String getCpf() {
 		return cpf;
 	}
@@ -70,6 +63,12 @@ public class Computador {
 	}
 	public void setFonte(String fonte) {
 		this.fonte = fonte;
+	}
+	public String getGabinete() {
+		return gabinete;
+	}
+	public void setGabinete(String gabinete) {
+		this.gabinete = gabinete;
 	}
 
 
